@@ -279,12 +279,13 @@ h3 {
   border-radius: 20px;
   overflow: hidden;
   background: white;
+  height: 420px;
 }
 
 #drawCanvas {
   display: block;
   width: 100%;
-  height: 420px;
+  height: 100%;
   touch-action: none;
   cursor: crosshair;
   background: white;
@@ -294,20 +295,25 @@ h3 {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,60,166,.12), transparent 30%),
-    radial-gradient(circle at 80% 80%, rgba(52,217,255,.12), transparent 30%),
+    radial-gradient(circle at 20% 20%, rgba(255,60,166,.15), transparent 30%),
+    radial-gradient(circle at 80% 80%, rgba(52,217,255,.15), transparent 30%),
     #111;
   color: white;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   text-align: center;
   z-index: 3;
   padding: 30px;
+
+  /* VERY IMPORTANT:
+     lets Angel draw THROUGH the cover */
+  pointer-events: none;
 }
 
 .blind-cover h3 {
   font-size: clamp(2rem, 6vw, 4rem);
+  margin-bottom: 10px;
 }
 
 .game-controls {
@@ -589,7 +595,6 @@ textarea {
       #20242b 72%,
       #000 100%
     );
-  filter: saturate(1.2);
   box-shadow:
     inset -15px -15px 35px rgba(0,0,0,.5),
     0 0 45px rgba(110,220,255,.16);
@@ -620,8 +625,8 @@ textarea {
     padding: 45px 14px;
   }
 
-  #drawCanvas {
-    height: 330px;
+  .canvas-shell {
+    height: 340px;
   }
 }
 </style>
@@ -655,7 +660,9 @@ textarea {
         That's literally why you're here.
       </h3>
 
-      <a href="#merch" class="btn">LET'S GO →</a>
+      <a href="#merch" class="btn">
+        LET'S GO →
+      </a>
 
     </div>
   </div>
@@ -701,8 +708,16 @@ textarea {
       <div class="merch-grid">
         <div class="merch">🧥 FAWYL Hoodie</div>
         <div class="merch">👕 FAWYL Shirt</div>
-        <div class="merch">🎁 Bonus Gift #1<br><span class="small">CLASSIFIED</span></div>
-        <div class="merch">🎁 Bonus Gift #2<br><span class="small">EXTREMELY CLASSIFIED</span></div>
+
+        <div class="merch">
+          🎁 Bonus Gift #1<br>
+          <span class="small">CLASSIFIED</span>
+        </div>
+
+        <div class="merch">
+          🎁 Bonus Gift #2<br>
+          <span class="small">EXTREMELY CLASSIFIED</span>
+        </div>
       </div>
 
       <div class="status">
@@ -744,12 +759,17 @@ textarea {
 
           <div class="reveal-content">
 
-            <p>SEASON 1 ORIGINAL TESTER EDITION</p>
+            <p>
+              SEASON 1 ORIGINAL TESTER EDITION
+            </p>
 
-            <h2>ART IN<br>THE DARK</h2>
+            <h2>
+              ART IN<br>THE DARK
+            </h2>
 
             <p>
-              <strong>ROUND:</strong> This Should Be Easy...
+              <strong>ROUND:</strong>
+              This Should Be Easy...
             </p>
 
             <button class="btn yellow" id="openGameBtn">
@@ -793,19 +813,29 @@ textarea {
       </p>
 
       <div class="status">
+
         <strong>HOW THIS WORKS</strong>
+
         <p>🎨 You'll get one drawing prompt.</p>
         <p>🙈 Once you start, your drawing area goes dark.</p>
         <p>✏️ Draw using your mouse, finger, or trackpad.</p>
         <p>⏱️ You have 45 seconds.</p>
         <p>👀 When time runs out, your masterpiece is revealed.</p>
+
       </div>
 
       <div class="game-panel">
 
         <div class="prompt-box">
-          <div class="tiny">YOUR PROMPT</div>
-          <h3 id="promptText">?</h3>
+
+          <div class="tiny">
+            YOUR PROMPT
+          </div>
+
+          <h3 id="promptText">
+            Press Start
+          </h3>
+
         </div>
 
         <div class="timer" id="timer">
@@ -817,12 +847,19 @@ textarea {
           <canvas id="drawCanvas"></canvas>
 
           <div class="blind-cover" id="blindCover">
+
             <div>
-              <h3>YOU CAN'T SEE IT.</h3>
+
+              <h3>
+                YOU CAN'T SEE IT.
+              </h3>
+
               <p>
-                That's kind of the point.
+                Keep drawing anyway.
               </p>
+
             </div>
+
           </div>
 
         </div>
@@ -852,7 +889,8 @@ textarea {
           </p>
 
           <p>
-            Whether it resembles the prompt is between you and whatever higher power oversees drawing games.
+            Whether it resembles the prompt is between you and whatever higher
+            power oversees drawing games.
           </p>
 
           <button class="btn" id="feedbackBtn">
@@ -884,7 +922,11 @@ textarea {
       </p>
 
       <div class="rating-row">
-        <label>How fun was it?</label>
+
+        <label>
+          How fun was it?
+        </label>
+
         <select id="funRating">
           <option value="">Choose one</option>
           <option>⭐</option>
@@ -893,10 +935,15 @@ textarea {
           <option>⭐⭐⭐⭐</option>
           <option>⭐⭐⭐⭐⭐</option>
         </select>
+
       </div>
 
       <div class="rating-row">
-        <label>How easy were the rules to understand?</label>
+
+        <label>
+          How easy were the rules to understand?
+        </label>
+
         <select id="rulesRating">
           <option value="">Choose one</option>
           <option>⭐</option>
@@ -905,10 +952,15 @@ textarea {
           <option>⭐⭐⭐⭐</option>
           <option>⭐⭐⭐⭐⭐</option>
         </select>
+
       </div>
 
       <div class="rating-row">
-        <label>How difficult was the actual game?</label>
+
+        <label>
+          How difficult was the actual game?
+        </label>
+
         <select id="difficultyRating">
           <option value="">Choose one</option>
           <option>⭐</option>
@@ -917,16 +969,22 @@ textarea {
           <option>⭐⭐⭐⭐</option>
           <option>⭐⭐⭐⭐⭐</option>
         </select>
+
       </div>
 
       <div class="rating-row">
-        <label>Would you willingly play this again?</label>
+
+        <label>
+          Would you willingly play this again?
+        </label>
+
         <select id="playAgain">
           <option value="">Choose one</option>
           <option>Absolutely</option>
           <option>Maybe</option>
           <option>I have suffered enough</option>
         </select>
+
       </div>
 
       <div class="rating-row">
@@ -961,16 +1019,21 @@ textarea {
   <div class="container">
     <div class="card">
 
-      <span class="badge">One More Thing</span>
+      <span class="badge">
+        One More Thing
+      </span>
 
-      <h2>YOUR COLLECTOR CARD.</h2>
+      <h2>
+        YOUR COLLECTOR CARD.
+      </h2>
 
       <p>
         You're part of the group helping build Season 1.
       </p>
 
       <h3>
-        Which means you're officially one of the people who were here before we knew whether any of this actually worked.
+        Which means you're officially one of the people who were here before
+        we knew whether any of this actually worked.
       </h3>
 
       <div class="flip-wrap">
@@ -1098,11 +1161,14 @@ textarea {
       </div>
 
       <p style="text-align:center;">
-        A physical version of this collector card is planned as part of the Season 1 game collection.
+        A physical version of this collector card is planned as part of the
+        Season 1 game collection.
       </p>
 
       <p style="text-align:center;">
-        <strong>Meaning yes. You get to say you had yours first.</strong>
+        <strong>
+          Meaning yes. You get to say you had yours first.
+        </strong>
       </p>
 
     </div>
@@ -1111,7 +1177,9 @@ textarea {
 
 <footer class="footer">
 
-  <h2>THANK YOU, ANGEL.</h2>
+  <h2>
+    THANK YOU, ANGEL.
+  </h2>
 
   <p>For being early.</p>
   <p>For being patient.</p>
@@ -1131,38 +1199,72 @@ textarea {
 
 <script>
 
-/* SCRATCH CARD */
+/* =========================
+   SCRATCH CARD
+========================= */
 
-const scratchCanvas = document.getElementById("scratchCanvas");
-const scratchCtx = scratchCanvas.getContext("2d");
+const scratchCanvas =
+  document.getElementById("scratchCanvas");
+
+const scratchCtx =
+  scratchCanvas.getContext("2d");
 
 function sizeScratchCanvas() {
-  const rect = scratchCanvas.getBoundingClientRect();
-  const ratio = window.devicePixelRatio || 1;
 
-  scratchCanvas.width = rect.width * ratio;
-  scratchCanvas.height = rect.height * ratio;
+  const rect =
+    scratchCanvas.getBoundingClientRect();
 
-  scratchCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  const ratio =
+    window.devicePixelRatio || 1;
 
-  const gradient = scratchCtx.createLinearGradient(
+  scratchCanvas.width =
+    rect.width * ratio;
+
+  scratchCanvas.height =
+    rect.height * ratio;
+
+  scratchCtx.setTransform(
+    ratio,
+    0,
+    0,
+    ratio,
+    0,
+    0
+  );
+
+  const gradient =
+    scratchCtx.createLinearGradient(
+      0,
+      0,
+      rect.width,
+      rect.height
+    );
+
+  gradient.addColorStop(0, "#b7b7b7");
+  gradient.addColorStop(.5, "#eeeeee");
+  gradient.addColorStop(1, "#969696");
+
+  scratchCtx.globalCompositeOperation =
+    "source-over";
+
+  scratchCtx.fillStyle =
+    gradient;
+
+  scratchCtx.fillRect(
     0,
     0,
     rect.width,
     rect.height
   );
 
-  gradient.addColorStop(0, "#b7b7b7");
-  gradient.addColorStop(.5, "#eeeeee");
-  gradient.addColorStop(1, "#969696");
+  scratchCtx.fillStyle =
+    "#222";
 
-  scratchCtx.globalCompositeOperation = "source-over";
-  scratchCtx.fillStyle = gradient;
-  scratchCtx.fillRect(0, 0, rect.width, rect.height);
+  scratchCtx.textAlign =
+    "center";
 
-  scratchCtx.fillStyle = "#222";
-  scratchCtx.textAlign = "center";
-  scratchCtx.font = "900 28px Arial";
+  scratchCtx.font =
+    "900 28px Arial";
 
   scratchCtx.fillText(
     "SCRATCH ME",
@@ -1170,7 +1272,8 @@ function sizeScratchCanvas() {
     rect.height / 2
   );
 
-  scratchCtx.font = "700 16px Arial";
+  scratchCtx.font =
+    "700 16px Arial";
 
   scratchCtx.fillText(
     "YOUR GAME IS UNDER HERE",
@@ -1185,60 +1288,320 @@ let scratching = false;
 let hasScratched = false;
 
 function scratch(x, y) {
-  const rect = scratchCanvas.getBoundingClientRect();
 
-  const px = x - rect.left;
-  const py = y - rect.top;
+  const rect =
+    scratchCanvas.getBoundingClientRect();
 
-  scratchCtx.globalCompositeOperation = "destination-out";
+  const px =
+    x - rect.left;
+
+  const py =
+    y - rect.top;
+
+  scratchCtx.globalCompositeOperation =
+    "destination-out";
 
   scratchCtx.beginPath();
-  scratchCtx.arc(px, py, 32, 0, Math.PI * 2);
+
+  scratchCtx.arc(
+    px,
+    py,
+    32,
+    0,
+    Math.PI * 2
+  );
+
   scratchCtx.fill();
 
-  hasScratched = true;
+  hasScratched =
+    true;
 }
 
-scratchCanvas.addEventListener("pointerdown", e => {
-  scratching = true;
-  scratchCanvas.setPointerCapture(e.pointerId);
-  scratch(e.clientX, e.clientY);
-});
+scratchCanvas.addEventListener(
+  "pointerdown",
+  e => {
 
-scratchCanvas.addEventListener("pointermove", e => {
-  if (!scratching) return;
-  scratch(e.clientX, e.clientY);
-});
+    scratching =
+      true;
 
-scratchCanvas.addEventListener("pointerup", e => {
-  scratching = false;
+    scratchCanvas.setPointerCapture(
+      e.pointerId
+    );
 
-  if (scratchCanvas.hasPointerCapture(e.pointerId)) {
-    scratchCanvas.releasePointerCapture(e.pointerId);
+    scratch(
+      e.clientX,
+      e.clientY
+    );
+
+  }
+);
+
+scratchCanvas.addEventListener(
+  "pointermove",
+  e => {
+
+    if (!scratching) return;
+
+    scratch(
+      e.clientX,
+      e.clientY
+    );
+
+  }
+);
+
+scratchCanvas.addEventListener(
+  "pointerup",
+  e => {
+
+    scratching =
+      false;
+
+    if (
+      scratchCanvas.hasPointerCapture(
+        e.pointerId
+      )
+    ) {
+      scratchCanvas.releasePointerCapture(
+        e.pointerId
+      );
+    }
+
+    if (hasScratched) {
+
+      setTimeout(() => {
+
+        scratchCanvas.style.display =
+          "none";
+
+      }, 250);
+
+    }
+
+  }
+);
+
+
+/* =========================
+   DRAWING CANVAS
+========================= */
+
+const drawCanvas =
+  document.getElementById("drawCanvas");
+
+const drawCtx =
+  drawCanvas.getContext("2d");
+
+let drawing = false;
+let gameStarted = false;
+let canvasReady = false;
+
+function sizeDrawCanvas() {
+
+  const rect =
+    drawCanvas.getBoundingClientRect();
+
+  if (
+    rect.width === 0 ||
+    rect.height === 0
+  ) {
+    return;
   }
 
-  if (hasScratched) {
-    setTimeout(() => {
-      scratchCanvas.style.display = "none";
-    }, 250);
+  const ratio =
+    window.devicePixelRatio || 1;
+
+  drawCanvas.width =
+    rect.width * ratio;
+
+  drawCanvas.height =
+    rect.height * ratio;
+
+  drawCtx.setTransform(
+    ratio,
+    0,
+    0,
+    ratio,
+    0,
+    0
+  );
+
+  drawCtx.fillStyle =
+    "#ffffff";
+
+  drawCtx.fillRect(
+    0,
+    0,
+    rect.width,
+    rect.height
+  );
+
+  drawCtx.lineCap =
+    "round";
+
+  drawCtx.lineJoin =
+    "round";
+
+  drawCtx.lineWidth =
+    6;
+
+  drawCtx.strokeStyle =
+    "#111111";
+
+  canvasReady =
+    true;
+}
+
+function getDrawPoint(e) {
+
+  const rect =
+    drawCanvas.getBoundingClientRect();
+
+  return {
+    x:
+      e.clientX - rect.left,
+
+    y:
+      e.clientY - rect.top
+  };
+}
+
+drawCanvas.addEventListener(
+  "pointerdown",
+  e => {
+
+    if (
+      !gameStarted ||
+      !canvasReady
+    ) {
+      return;
+    }
+
+    drawing =
+      true;
+
+    drawCanvas.setPointerCapture(
+      e.pointerId
+    );
+
+    const point =
+      getDrawPoint(e);
+
+    drawCtx.beginPath();
+
+    drawCtx.moveTo(
+      point.x,
+      point.y
+    );
+
   }
-});
+);
 
-/* OPEN GAME */
+drawCanvas.addEventListener(
+  "pointermove",
+  e => {
 
-document.getElementById("openGameBtn").addEventListener("click", () => {
-  scratchCanvas.style.display = "none";
+    if (
+      !drawing ||
+      !gameStarted
+    ) {
+      return;
+    }
 
-  const game = document.getElementById("game");
+    const point =
+      getDrawPoint(e);
 
-  game.style.display = "flex";
+    drawCtx.lineTo(
+      point.x,
+      point.y
+    );
 
-  game.scrollIntoView({
-    behavior: "smooth"
-  });
-});
+    drawCtx.stroke();
 
-/* DRAWING GAME */
+  }
+);
+
+drawCanvas.addEventListener(
+  "pointerup",
+  e => {
+
+    drawing =
+      false;
+
+    if (
+      drawCanvas.hasPointerCapture(
+        e.pointerId
+      )
+    ) {
+
+      drawCanvas.releasePointerCapture(
+        e.pointerId
+      );
+
+    }
+
+  }
+);
+
+drawCanvas.addEventListener(
+  "pointercancel",
+  () => {
+
+    drawing =
+      false;
+
+  }
+);
+
+
+/* =========================
+   OPEN GAME
+========================= */
+
+document
+  .getElementById("openGameBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      scratchCanvas.style.display =
+        "none";
+
+      const game =
+        document.getElementById(
+          "game"
+        );
+
+      game.style.display =
+        "flex";
+
+      game.scrollIntoView({
+        behavior: "smooth"
+      });
+
+      /*
+        IMPORTANT:
+        Wait until the hidden game is actually visible,
+        THEN measure and build the drawing canvas.
+      */
+
+      requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+          sizeDrawCanvas();
+
+        });
+
+      });
+
+    }
+  );
+
+
+/* =========================
+   ART IN THE DARK
+========================= */
 
 const prompts = [
   "A CAT WEARING A CROWN",
@@ -1250,227 +1613,328 @@ const prompts = [
 ];
 
 const promptText =
-  document.getElementById("promptText");
-
-const drawCanvas =
-  document.getElementById("drawCanvas");
-
-const drawCtx =
-  drawCanvas.getContext("2d");
-
-const blindCover =
-  document.getElementById("blindCover");
-
-const startDrawingBtn =
-  document.getElementById("startDrawingBtn");
-
-const clearCanvasBtn =
-  document.getElementById("clearCanvasBtn");
-
-const revealDrawingBtn =
-  document.getElementById("revealDrawingBtn");
-
-const resultBox =
-  document.getElementById("resultBox");
-
-const timerDisplay =
-  document.getElementById("timer");
-
-let drawing = false;
-let gameStarted = false;
-let timerInterval = null;
-let timeLeft = 45;
-
-function sizeDrawCanvas() {
-  const rect = drawCanvas.getBoundingClientRect();
-  const ratio = window.devicePixelRatio || 1;
-
-  drawCanvas.width = rect.width * ratio;
-  drawCanvas.height = rect.height * ratio;
-
-  drawCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
-
-  drawCtx.fillStyle = "#ffffff";
-  drawCtx.fillRect(0, 0, rect.width, rect.height);
-
-  drawCtx.lineCap = "round";
-  drawCtx.lineJoin = "round";
-  drawCtx.lineWidth = 6;
-  drawCtx.strokeStyle = "#111111";
-}
-
-sizeDrawCanvas();
-
-function getPoint(e) {
-  const rect = drawCanvas.getBoundingClientRect();
-
-  return {
-    x: e.clientX - rect.left,
-    y: e.clientY - rect.top
-  };
-}
-
-drawCanvas.addEventListener("pointerdown", e => {
-  if (!gameStarted) return;
-
-  drawing = true;
-
-  const point = getPoint(e);
-
-  drawCtx.beginPath();
-  drawCtx.moveTo(point.x, point.y);
-});
-
-drawCanvas.addEventListener("pointermove", e => {
-  if (!drawing || !gameStarted) return;
-
-  const point = getPoint(e);
-
-  drawCtx.lineTo(point.x, point.y);
-  drawCtx.stroke();
-});
-
-window.addEventListener("pointerup", () => {
-  drawing = false;
-});
-
-clearCanvasBtn.addEventListener("click", () => {
-  if (!gameStarted) return;
-
-  const rect = drawCanvas.getBoundingClientRect();
-
-  drawCtx.clearRect(0, 0, rect.width, rect.height);
-  drawCtx.fillStyle = "#ffffff";
-  drawCtx.fillRect(0, 0, rect.width, rect.height);
-});
-
-startDrawingBtn.addEventListener("click", () => {
-
-  if (gameStarted) return;
-
-  const chosenPrompt =
-    prompts[Math.floor(Math.random() * prompts.length)];
-
-  promptText.textContent = chosenPrompt;
-
-  blindCover.style.display = "flex";
-
-  gameStarted = true;
-  timeLeft = 45;
-
-  timerDisplay.textContent = timeLeft;
-
-  startDrawingBtn.disabled = true;
-  startDrawingBtn.textContent = "DRAWING IN PROGRESS...";
-
-  timerInterval = setInterval(() => {
-
-    timeLeft--;
-
-    timerDisplay.textContent = timeLeft;
-
-    if (timeLeft <= 0) {
-
-      clearInterval(timerInterval);
-
-      gameStarted = false;
-      drawing = false;
-
-      startDrawingBtn.classList.add("hidden");
-      clearCanvasBtn.classList.add("hidden");
-      revealDrawingBtn.classList.remove("hidden");
-
-      timerDisplay.textContent = "TIME";
-
-    }
-
-  }, 1000);
-
-});
-
-revealDrawingBtn.addEventListener("click", () => {
-
-  blindCover.style.display = "none";
-
-  revealDrawingBtn.classList.add("hidden");
-
-  resultBox.style.display = "block";
-
-  resultBox.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
-
-});
-
-/* FEEDBACK */
-
-document.getElementById("feedbackBtn").addEventListener("click", () => {
-
-  const feedback =
-    document.getElementById("feedback");
-
-  feedback.style.display = "flex";
-
-  feedback.scrollIntoView({
-    behavior: "smooth"
-  });
-
-});
-
-document.getElementById("submitFeedback").addEventListener("click", () => {
-
-  const feedbackData = {
-
-    tester: "Angel",
-    game: "Art in the Dark",
-
-    fun:
-      document.getElementById("funRating").value,
-
-    rules:
-      document.getElementById("rulesRating").value,
-
-    difficulty:
-      document.getElementById("difficultyRating").value,
-
-    playAgain:
-      document.getElementById("playAgain").value,
-
-    confused:
-      document.getElementById("confused").value,
-
-    favorite:
-      document.getElementById("favorite").value,
-
-    change:
-      document.getElementById("change").value,
-
-    broken:
-      document.getElementById("broken").value
-  };
-
-  localStorage.setItem(
-    "fawylAngelFeedback",
-    JSON.stringify(feedbackData)
+  document.getElementById(
+    "promptText"
   );
 
-  const collector =
-    document.getElementById("collector");
+const blindCover =
+  document.getElementById(
+    "blindCover"
+  );
 
-  collector.style.display = "flex";
+const startDrawingBtn =
+  document.getElementById(
+    "startDrawingBtn"
+  );
 
-  collector.scrollIntoView({
-    behavior: "smooth"
-  });
+const clearCanvasBtn =
+  document.getElementById(
+    "clearCanvasBtn"
+  );
 
-});
+const revealDrawingBtn =
+  document.getElementById(
+    "revealDrawingBtn"
+  );
 
-/* COLLECTOR CARD */
+const timerDisplay =
+  document.getElementById(
+    "timer"
+  );
 
-document.getElementById("collectorCard").addEventListener("click", function() {
-  this.classList.toggle("flipped");
-});
+const resultBox =
+  document.getElementById(
+    "resultBox"
+  );
+
+let timeLeft =
+  45;
+
+let timerInterval =
+  null;
+
+
+startDrawingBtn.addEventListener(
+  "click",
+  () => {
+
+    if (gameStarted) return;
+
+    if (!canvasReady) {
+      sizeDrawCanvas();
+    }
+
+    const chosenPrompt =
+      prompts[
+        Math.floor(
+          Math.random() *
+          prompts.length
+        )
+      ];
+
+    promptText.textContent =
+      chosenPrompt;
+
+    /*
+      Black cover appears,
+      but pointer-events:none allows drawing underneath.
+    */
+
+    blindCover.style.display =
+      "flex";
+
+    gameStarted =
+      true;
+
+    timeLeft =
+      45;
+
+    timerDisplay.textContent =
+      timeLeft;
+
+    startDrawingBtn.disabled =
+      true;
+
+    startDrawingBtn.textContent =
+      "DRAW. DON'T PEEK.";
+
+    clearCanvasBtn.classList.remove(
+      "hidden"
+    );
+
+    timerInterval =
+      setInterval(
+        () => {
+
+          timeLeft--;
+
+          timerDisplay.textContent =
+            timeLeft;
+
+          if (
+            timeLeft <= 0
+          ) {
+
+            clearInterval(
+              timerInterval
+            );
+
+            gameStarted =
+              false;
+
+            drawing =
+              false;
+
+            timerDisplay.textContent =
+              "TIME!";
+
+            startDrawingBtn.classList.add(
+              "hidden"
+            );
+
+            clearCanvasBtn.classList.add(
+              "hidden"
+            );
+
+            revealDrawingBtn.classList.remove(
+              "hidden"
+            );
+
+          }
+
+        },
+        1000
+      );
+
+  }
+);
+
+
+clearCanvasBtn.addEventListener(
+  "click",
+  () => {
+
+    if (
+      !gameStarted ||
+      !canvasReady
+    ) {
+      return;
+    }
+
+    const rect =
+      drawCanvas.getBoundingClientRect();
+
+    drawCtx.clearRect(
+      0,
+      0,
+      rect.width,
+      rect.height
+    );
+
+    drawCtx.fillStyle =
+      "#ffffff";
+
+    drawCtx.fillRect(
+      0,
+      0,
+      rect.width,
+      rect.height
+    );
+
+  }
+);
+
+
+revealDrawingBtn.addEventListener(
+  "click",
+  () => {
+
+    blindCover.style.display =
+      "none";
+
+    revealDrawingBtn.classList.add(
+      "hidden"
+    );
+
+    resultBox.style.display =
+      "block";
+
+    resultBox.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }
+);
+
+
+/* =========================
+   FEEDBACK
+========================= */
+
+document
+  .getElementById(
+    "feedbackBtn"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      const feedback =
+        document.getElementById(
+          "feedback"
+        );
+
+      feedback.style.display =
+        "flex";
+
+      feedback.scrollIntoView({
+        behavior: "smooth"
+      });
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "submitFeedback"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      const feedbackData = {
+
+        tester:
+          "Angel",
+
+        game:
+          "Art in the Dark",
+
+        fun:
+          document.getElementById(
+            "funRating"
+          ).value,
+
+        rules:
+          document.getElementById(
+            "rulesRating"
+          ).value,
+
+        difficulty:
+          document.getElementById(
+            "difficultyRating"
+          ).value,
+
+        playAgain:
+          document.getElementById(
+            "playAgain"
+          ).value,
+
+        confused:
+          document.getElementById(
+            "confused"
+          ).value,
+
+        favorite:
+          document.getElementById(
+            "favorite"
+          ).value,
+
+        change:
+          document.getElementById(
+            "change"
+          ).value,
+
+        broken:
+          document.getElementById(
+            "broken"
+          ).value
+
+      };
+
+      localStorage.setItem(
+        "fawylAngelFeedback",
+        JSON.stringify(
+          feedbackData
+        )
+      );
+
+      const collector =
+        document.getElementById(
+          "collector"
+        );
+
+      collector.style.display =
+        "flex";
+
+      collector.scrollIntoView({
+        behavior: "smooth"
+      });
+
+    }
+  );
+
+
+/* =========================
+   COLLECTOR CARD
+========================= */
+
+document
+  .getElementById(
+    "collectorCard"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      this.classList.toggle(
+        "flipped"
+      );
+
+    }
+  );
 
 </script>
 
